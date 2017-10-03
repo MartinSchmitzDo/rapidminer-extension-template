@@ -1,9 +1,6 @@
 package com.rapidminer.extension.rmSmile.clusterer;
 
-import com.rapidminer.example.Attribute;
-import com.rapidminer.example.AttributeRole;
-import com.rapidminer.example.Attributes;
-import com.rapidminer.example.ExampleSet;
+import com.rapidminer.example.*;
 import com.rapidminer.example.table.AttributeFactory;
 import com.rapidminer.example.utils.ExampleSetBuilder;
 import com.rapidminer.example.utils.ExampleSets;
@@ -15,6 +12,7 @@ import com.rapidminer.operator.ports.InputPort;
 import com.rapidminer.operator.ports.OutputPort;
 import com.rapidminer.tools.Ontology;
 
+import org.bouncycastle.crypto.modes.EAXBlockCipher;
 import smile.clustering.KMeans;
 import smile.data.AttributeDataset;
 import smile.data.Dataset;
@@ -40,8 +38,12 @@ public class KMeansClusteringOperator extends Operator {
     public void doWork() throws UserError {
         ExampleSetParser parser = new ExampleSetParser();
         AttributeDataset ds = null;
+
+        ExampleSet exa = exaInput.getData(ExampleSet.class);
+
+        // there might be a nicer version
         try {
-            ds = parser.getDataSet(exaInput.getData(ExampleSet.class));
+            ds = parser.getDataSet(exa);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -50,18 +52,23 @@ public class KMeansClusteringOperator extends Operator {
 
         KMeans kMeans = new KMeans(ds.toArray(valueArray),3,10);
 
-        getLogger().log(Level.SEVERE,ds.get(0).x.toString());
-        getLogger().log(Level.SEVERE,String.valueOf(kMeans.predict(ds.get(0).x)));
+        // learning done
 
-        Attributes atts = parser.getRMAtts();
-        List<Attribute> listOfAtt = new ArrayList<>();
-        for (Attribute a : atts){
-            listOfAtt.add(a);
-        }
         Attribute clusterAtt = AttributeFactory.createAttribute("clusterid", Ontology.NOMINAL);
-        listOfAtt.add(clusterAtt);
+        exa.getAttributes().addRegular(clusterAtt);
+        exa.getExampleTable().addAttribute(clusterAtt);
+        getLogger().log(Level.SEVERE, String.valueOf(parser.getRMAtts().size()));
+        for(int i = 0; i<exa.size();++i){
+            double prediction = kMeans.predict(parser.getAsRow(exa,i));
+            exa.getExample(i).setValue(clusterAtt,"cluster_"+Double.toString(prediction));
 
-        ExampleSetBuilder builds;
+        }
+        exaOut.deliver(exa);
+
+
+        
+        
+        /*ExampleSetBuilder builds;
         builds = ExampleSets.from(listOfAtt);
 
         for(int i = 0; i < ds.size(); ++i){
@@ -76,7 +83,7 @@ public class KMeansClusteringOperator extends Operator {
 
             builds.addRow(row);
         }
-        exaOut.deliver(builds.build());
+        exaOut.deliver(builds.build());*/
 
 
     }

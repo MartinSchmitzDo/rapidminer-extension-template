@@ -1,14 +1,16 @@
 package com.rapidminer.extension.rmSmile.parser;
 
 import com.rapidminer.example.*;
-import com.rapidminer.example.utils.ExampleSetBuilder;
-import com.rapidminer.operator.UserError;
+
+import com.rapidminer.operator.Operator;
+
 import smile.data.*;
 import smile.data.Attribute;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * Created by mschmitz on 03.10.17.
@@ -18,8 +20,12 @@ public class ExampleSetParser {
     private List<Attribute> smileAtts = new ArrayList<>();
     private Attributes rmAtt;
 
+
+
+
     public AttributeDataset getDataSet(ExampleSet exa) throws ParseException {
-        rmAtt = exa.getAttributes();
+        rmAtt = (Attributes) exa.getAttributes().clone();
+
         for(com.rapidminer.example.Attribute a : exa.getAttributes()){
             if(a.isNumerical()){
                 smileAtts.add(new NumericAttribute(a.getName()));
@@ -71,9 +77,22 @@ public class ExampleSetParser {
 
         return ds;
     }
+
     public com.rapidminer.example.Attributes getRMAtts(){
         return rmAtt;
     };
+
+    public double[] getAsRow(ExampleSet exa, int i ){
+        double[] row = new double[rmAtt.size()];
+        int aCounter = 0;
+        for(com.rapidminer.example.Attribute a : rmAtt){
+            // if this is used on another exa, we need to search by name
+            row[aCounter] = exa.getExample(i).getValue(a);
+            ++aCounter;
+
+        }
+        return row;
+    }
 
 
 }
