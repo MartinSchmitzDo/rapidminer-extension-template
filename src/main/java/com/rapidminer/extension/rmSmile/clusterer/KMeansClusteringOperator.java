@@ -59,31 +59,12 @@ public class KMeansClusteringOperator extends Operator {
         exa.getExampleTable().addAttribute(clusterAtt);
         getLogger().log(Level.SEVERE, String.valueOf(parser.getRMAtts().size()));
         for(int i = 0; i<exa.size();++i){
-            double prediction = kMeans.predict(parser.getAsRow(exa,i));
-            exa.getExample(i).setValue(clusterAtt,"cluster_"+Double.toString(prediction));
+            int prediction = kMeans.predict(parser.getAsRow(exa,i));
+            exa.getExample(i).setValue(clusterAtt,"cluster_"+String.valueOf(prediction));
 
         }
+        exa.getAttributes().setCluster(clusterAtt);
         exaOut.deliver(exa);
-
-
-        
-        
-        /*ExampleSetBuilder builds;
-        builds = ExampleSets.from(listOfAtt);
-
-        for(int i = 0; i < ds.size(); ++i){
-            double[] row = new double[listOfAtt.size()];
-            for(int j = 0; j < listOfAtt.size()-1;++j) {
-                row[j] = ds.get(i).x[j];
-                getLogger().log(Level.SEVERE,Integer.toString(j));
-            }
-            row[listOfAtt.size()-1] = clusterAtt.getMapping().mapString(
-                    "cluster_"+ Integer.toString( kMeans.predict(ds.get(i).x))
-            );
-
-            builds.addRow(row);
-        }
-        exaOut.deliver(builds.build());*/
 
 
     }

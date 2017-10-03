@@ -86,8 +86,9 @@ public class ExampleSetParser {
         double[] row = new double[rmAtt.size()];
         int aCounter = 0;
         for(com.rapidminer.example.Attribute a : rmAtt){
+            com.rapidminer.example.Attribute attributeInThisExample = exa.getAttributes().get(a.getName());
             // if this is used on another exa, we need to search by name
-            row[aCounter] = exa.getExample(i).getValue(a);
+            row[aCounter] = exa.getExample(i).getValue(attributeInThisExample);
             ++aCounter;
 
         }
