@@ -1,4 +1,4 @@
-package com.rapidminer.extension.rmSmile.parser;
+package com.rapidminer.extension.rmSmile;
 
 import com.rapidminer.example.*;
 
@@ -13,10 +13,12 @@ import java.util.List;
 import java.util.logging.Level;
 
 /**
+ * This class provides helper functions to convert example sets into data sets and get data rows in the right order
+ *
  * Created by mschmitz on 03.10.17.
  */
-public class ExampleSetParser {
-    public ExampleSetParser(){};
+public class LittleSmile {
+    public LittleSmile(){};
     private List<Attribute> smileAtts = new ArrayList<>();
     private Attributes rmAtt;
 

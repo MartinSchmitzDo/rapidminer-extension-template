@@ -1,7 +1,6 @@
 package com.rapidminer.extension.rmSmile;
 
 import com.rapidminer.example.ExampleSet;
-import com.rapidminer.extension.rmSmile.parser.ExampleSetParser;
 import com.rapidminer.operator.Operator;
 import com.rapidminer.operator.OperatorDescription;
 import com.rapidminer.operator.UserError;
@@ -21,7 +20,7 @@ public class ExampleSetConverter extends Operator {
     };
 
     public void doWork() throws UserError {
-        ExampleSetParser parser = new ExampleSetParser();
+        LittleSmile parser = new LittleSmile();
         try {
             parser.getDataSet(exa.getData(ExampleSet.class));
         } catch (ParseException e) {

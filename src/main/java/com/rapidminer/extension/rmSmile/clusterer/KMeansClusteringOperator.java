@@ -2,9 +2,7 @@ package com.rapidminer.extension.rmSmile.clusterer;
 
 import com.rapidminer.example.*;
 import com.rapidminer.example.table.AttributeFactory;
-import com.rapidminer.example.utils.ExampleSetBuilder;
-import com.rapidminer.example.utils.ExampleSets;
-import com.rapidminer.extension.rmSmile.parser.ExampleSetParser;
+import com.rapidminer.extension.rmSmile.LittleSmile;
 import com.rapidminer.operator.Operator;
 import com.rapidminer.operator.OperatorDescription;
 import com.rapidminer.operator.UserError;
@@ -12,16 +10,10 @@ import com.rapidminer.operator.ports.InputPort;
 import com.rapidminer.operator.ports.OutputPort;
 import com.rapidminer.tools.Ontology;
 
-import org.bouncycastle.crypto.modes.EAXBlockCipher;
 import smile.clustering.KMeans;
 import smile.data.AttributeDataset;
-import smile.data.Dataset;
-import smile.data.Datum;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Supplier;
 import java.util.logging.Level;
 
 /**
@@ -36,7 +28,7 @@ public class KMeansClusteringOperator extends Operator {
         super(description);
     }
     public void doWork() throws UserError {
-        ExampleSetParser parser = new ExampleSetParser();
+        LittleSmile parser = new LittleSmile();
         AttributeDataset ds = null;
 
         ExampleSet exa = exaInput.getData(ExampleSet.class);
