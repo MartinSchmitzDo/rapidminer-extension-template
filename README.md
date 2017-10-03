@@ -1,20 +1,26 @@
-RapidMiner Extension Template
-=============================
+This is a RapidMiner extension which acts as a wrapper to include SMILE by haifengl: https://github.com/haifengl/smile   into RapidMiner.
 
-A template project for creating a RapidMiner Studio extension. 
+Just clone it and run gradlew installExtension to get it into your Rapidminer
 
-### Prerequisite
-* Requires Gradle 2.3+ (get it [here](http://gradle.org/installation) or use the Gradle wrapper shipped with this template)
+As of now this is just a tiny side/fun project of mine
 
-### Getting started
-1. Clone the extension template
 
-2. Change the extension settings in _build.gradle_ (e.g. replace 'Template' by the desired extension name)
 
-3. Initialize the extension project by executing the _initializeExtensionProject_ Gradle task (e.g. via 'gradlew initializeExtensionProject')
 
-4. Add an extension icon by placing an image named "icon.png" in  _src/main/resources/META-INF/_. 
 
-5. Build and install your extension by executing the _installExtension_ Gradle task 
 
-6. Start RapidMiner Studio and check whether your extension has been loaded
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
